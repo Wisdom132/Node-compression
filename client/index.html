@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <style>
+        .container {
+            width: 350px;
+            height: 350px;
+            border: 2px dotted gray
+        }
+
+        .container h4 {
+            text-align: center;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="container" v-cloak @drop.prevent="addFile" @dragover.prevent>
+            <h4>Drag and Drop here</h4>
+            <li v-for="(file,id) in files" :key="id" class="list-group-item mb-3 border-top">
+                {{ file.name }} ({{ file.size | kb }} kb)
+                <button @click="removeFile(file)">Remove</button>
+        </div>
+        {{message}}
+    </div>
+
+    <script src=" main.js"></script>
+
+</body>
+
+</html>
