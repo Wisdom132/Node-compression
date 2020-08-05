@@ -22,5 +22,22 @@ var app = new Vue({
         return f != file;
       });
     },
+    compress() {
+      let formdata = new FormData();
+      formdata.append('file', this.files[0])
+      axios.post('http://localhost:3000/compress', formdata).then(response => {
+        console.log(response)
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'compressed.gz');
+        document.body.appendChild(fileLink);
+
+        fileLink.click();
+      })
+
+
+
+    }
   }
 })
