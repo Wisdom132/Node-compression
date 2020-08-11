@@ -25,19 +25,16 @@ var app = new Vue({
     compress() {
       let formdata = new FormData();
       formdata.append('file', this.files[0])
-      axios.post('http://localhost:3000/compress', formdata).then(response => {
-        console.log(response)
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement('a');
+      
+      axios.post('http://localhost:3000/compress', formdata, {responseType:'blob'}).then(response => {
+        console.log(response.headers['content-disposition'])
+        let fileURL = window.URL.createObjectURL(new Blob([(response.data)],{type: 'application/gzip'}))
+        let fileLink = document.createElement('a');
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'compressed.gz');
+        fileLink.setAttribute('download', 'gitl.gz');
         document.body.appendChild(fileLink);
-
         fileLink.click();
       })
-
-
-
     }
   }
 })

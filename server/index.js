@@ -1,11 +1,14 @@
 var express = require('express')
 var multer = require('multer')
 var zlib = require('zlib');
+var cors = require('cors')
 let fs = require('fs');
+let path = require('path')
 const http = require('http');
 
 
 var app = express()
+app.use(cors())
 
 //multer
 var storage = multer.memoryStorage()
@@ -18,18 +21,16 @@ app.post('/compress', upload.single('file'), async (req, res) => {
     const destination = `compressed/${req.file.originalname}.gz`;
     await zlib.gzip(req.file.buffer, async (err, response) => {
       if (err) {
-        return res.json('error')
+        return res.status(500).json({error:err})
       } else {
-        await fs.appendFile(destination, response, (err, data) => {
+        await fs.writeFile(path.join(__dirname,destination), response, (err, data) => {
           if (err) {
-            return res.json('error')
+            return res.status(500).json({error:err})
           } else {
-            res.json(response)
-
+            res.download(path.join(__dirname,destination) );
           }
         })
       }
-
     })
   } catch (err) {
     console.log(err)

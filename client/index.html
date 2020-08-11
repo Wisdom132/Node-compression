@@ -26,6 +26,9 @@
 <body>
 
     <div id="app">
+        <!-- <form action="http://localhost:3000/compress" @submit.prevent="compress" method="post">
+            <button type="submit">Compress</button>
+        </form> -->
 
         <div class="container" v-cloak @drop.prevent="addFile" @dragover.prevent>
             <h4>Drag and Drop here</h4>
@@ -34,6 +37,7 @@
                 <button @click="removeFile(file)">Remove</button>
         </div>
         <button @click="compress">Compress</button>
+
     </div>
 
     <script src=" main.js"></script>
